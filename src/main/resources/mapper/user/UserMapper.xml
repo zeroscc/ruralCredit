@@ -2,120 +2,62 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zeroscc.ruralcredit.modules.user.mapper.UserMapper">
 
-<!--        @TableId(type = IdType.AUTO)
-    private Integer userId;
-
-    @TableField("name")
-    private String name;
-
-    @TableField("code")
-    private String code;
-
-    @TableField("deptid")
-    private String deptid;
-
-    @TableField("jobs")
-    private String jobs;
-
-    @TableField("Login_name")
-    private String loginName;
-
-    @TableField("User_name")
-    private String userName;
-
-    @TableField("user_type")
-    private String userType = "1"; // 默认值为 "1"
-
-    @TableField("card_type")
-    private String cardType = "身份证"; // 默认值为 "身份证"
-
-    @TableField("phonenumber")
-    private String phonenumber;
-
-    @TableField("Phonenumbertem")
-    private String phonenumberTem;
-
-    @TableField("sex")
-    private Integer sex = 2; // 默认值为 2
-
-    @TableField("address")
-    private String address;
-
-    @TableField("busaddress")
-    private String busaddress;
-
-    @TableField("idcard")
-    private String idcard;
-
-    @TableField("password")
-    private String password;
-
-    @TableField("salt")
-    private String salt;
-
-    @TableField("status")
-    private Integer status = 0; // 默认值为 0
-
-    @TableField("del_flag")
-    private Integer delFlag = 0; // 默认值为 0
-
-    @TableField("street")
-    private String street;
-
-    @TableField("vallage")
-    private String vallage;
-
-    @TableField("province")
-    private String province;
-
-    @TableField("creditsite")
-    private Integer creditsite;
-
-    @TableField("credited")
-    private String credited;
-
-    @TableField("credit_prod")
-    private String creditProd;
-
-    @TableField("credit_amount")
-    private BigDecimal creditAmount;
-
-    @TableField("credit_time")
-    private Date creditTime;
-
-    @TableField("credit_endTime")
-    private Date creditEndTime;
-
-    @TableField("user_amount")
-    private Long userAmount;
-
-    @TableField("manager_id")
-    private String managerId;
-
-    @TableField("manager_name")
-    private String managerName;
-
-    @TableField("migrant")
-    private Boolean migrant;
-
-    @TableField("migrant_address")
-    private String migrantAddress;
-
-    @TableField("age")
-    private Integer age;
-
-    @TableField("birthday")
-    private Date birthday;
-
-    @TableField("org_id")
-    private Integer orgId;
-
-    @TableField(exist = false)
-    private Set<Role> roles;-->
     <!-- 通用查询映射结果 -->
     <resultMap id="BaseResultMap" type="com.zeroscc.ruralcredit.modules.user.entity.User">
-
+        <id column="userId" property="userId" />
+        <result column="name" property="name" />
+        <result column="code" property="code" />
+        <result column="deptid" property="deptid" />
+        <result column="jobs" property="jobs" />
+        <result column="login_name" property="loginName" />
+        <result column="user_name" property="userName" />
+        <result column="user_type" property="userType" />
+        <result column="card_type" property="cardType" />
+        <result column="phonenumber" property="phonenumber" />
+        <result column="phonenumbertem" property="phonenumberTem" />
+        <result column="sex" property="sex" />
+        <result column="address" property="address" />
+        <result column="busaddress" property="busaddress" />
+        <result column="idcard" property="idcard" />
+        <result column="password" property="password" />
+        <result column="salt" property="salt" />
+        <result column="status" property="status" />
+        <result column="del_flag" property="delFlag" />
+        <result column="street" property="street" />
+        <result column="vallage" property="vallage" />
+        <result column="province" property="province" />
+        <result column="creditsite" property="creditsite" />
+        <result column="credited" property="credited" />
+        <result column="credit_prod" property="creditProd" />
+        <result column="credit_amount" property="creditAmount" />
+        <result column="credit_time" property="creditTime" />
+        <result column="credit_endTime" property="creditEndTime" />
+        <result column="user_amount" property="userAmount" />
+        <result column="manager_id" property="managerId" />
+        <result column="manager_name" property="managerName" />
+        <result column="migrant" property="migrant" />
+        <result column="migrant_address" property="migrantAddress" />
+        <result column="age" property="age" />
+        <result column="birthday" property="birthday" />
+        <result column="org_id" property="orgId" />
+        <!-- 关联查询角色信息 -->
+        <collection property="roles" ofType="com.zeroscc.ruralcredit.modules.user.entity.Role">
+            <id column="id" property="id" />
+            <result column="name" property="name" />
+        </collection>
     </resultMap>
+
+    <!-- 查询用户信息及其角色 -->
+    <select id="findByLoginName" resultMap="BaseResultMap">
+        SELECT
+            u.*,
+            r.role_id, r.role_name
+        FROM sys_user u
+                 LEFT JOIN user_role ur ON u.userId = ur.user_id
+                 LEFT JOIN sys_role r ON ur.role_id = r.role_id
+        WHERE u.login_name = #{loginname}
+    </select>
+
 
 
 </mapper>

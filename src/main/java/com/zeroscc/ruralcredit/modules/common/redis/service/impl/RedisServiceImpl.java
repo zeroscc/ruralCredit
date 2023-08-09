@@ -2,14 +2,18 @@ package com.zeroscc.ruralcredit.modules.common.redis.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.yf.exam.core.utils.StringUtils;
-import com.yf.exam.modules.common.redis.service.RedisService;
+
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.zeroscc.ruralcredit.modules.common.redis.service.RedisService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 /**
  * @author bool
@@ -35,7 +39,10 @@ public class RedisServiceImpl implements RedisService {
             if (key.length == 1) {
                 redisTemplate.delete(key[0]);
             } else {
-                redisTemplate.delete(CollectionUtils.arrayToList(key));
+                List<?> objects = CollectionUtils.arrayToList(key);
+                //转换成字符串
+                Stream<String> stringStream = objects.stream().map(Object::toString);
+                redisTemplate.delete(Arrays.toString(stringStream.toArray(String[]::new)));
             }
         }
     }
