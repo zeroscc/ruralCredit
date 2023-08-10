@@ -21,7 +21,8 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @TableId(type = IdType.AUTO)
+//    @TableId(value =   type = IdType.AUTO)
+    @TableId(value = "userId", type = IdType.AUTO)
     private Integer userId;
 
     @TableField("name")

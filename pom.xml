@@ -97,6 +97,12 @@
             <scope>test</scope>
         </dependency>
 
+<!--        test-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+
         <!-- poi office -->
         <dependency>
             <groupId>org.apache.poi</groupId>

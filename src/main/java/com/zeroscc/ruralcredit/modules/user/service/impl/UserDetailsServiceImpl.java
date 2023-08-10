@@ -1,5 +1,6 @@
 package com.zeroscc.ruralcredit.modules.user.service.impl;
 
+import com.zeroscc.ruralcredit.modules.user.entity.LoginUser;
 import com.zeroscc.ruralcredit.modules.user.entity.User;
 import com.zeroscc.ruralcredit.modules.user.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("User not found");
         }
-        return new org.springframework.security.core.userdetails.User(
-                user.getUserName(), user.getPassword(), user.getAuthorities());
+        return new LoginUser(user);
     }
 }
